@@ -1,16 +1,20 @@
 import express from "express"
+import { adminAuth, userCheck } from "./Middleware/auth.middleware.js";
 
 const app = express()
 
-app.use("/test",(req, res) => {
-    res.send("Hello From the Server")
+app.use("/admin", adminAuth)
+
+app.get("/user",userCheck, (req, res) => {
+    res.status(201).send("It is valid user")
+} )
+
+app.get("/admin/getAllData", (req, res) => {
+    res.send("Get all the Data")
 })
 
-
-app.get("/home", (req, res) => {
-    res.json({
-        "msg":"Hello"
-    })
+app.delete("/admin/deleteAllData", (req, res) => {
+    res.send("All users will we deleted")
 })
 
 app.listen(8000, () => {
